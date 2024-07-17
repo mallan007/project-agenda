@@ -1,6 +1,6 @@
 <template>
     <footer id="footer">
-       <p> Lista de Contatos </p> 
+       
     </footer>
     <!--Criar lógica para 1 footer universal e 1 footer para 'Adicionar Contato'-->
    </template>

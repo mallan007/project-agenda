@@ -1,59 +1,106 @@
 <template>
-    <div class="main-container">
-      <Banner />
-    </div>  
-    <div id="contactName header">
-    <div id="contactName-table-rows">
-        <div class="contactName-table-row">
-        <details>
-           <!--Adicionar a lista de contacts.name para exibição
-            <summary v-for="contact in contacts" :key="contact.id" value="contact.name"> {{ contact.name }}
-              -->
-              <summary> <!-- Implementar uma função com v-for para mostrar todos os contatos puxando pela chave getContacts() => this.name -->
-               <ContactForm :name="name"/>
-            </summary>
-            <button class="btn-details">Exibir Detalhes</button>
-        </details>
-        </div>
-    </div> 
+<!--Personalizar o Navbar de acordo com a página-->
+<div id="btn-add-link"> 
+  <router-link to="/add"> <h2>Adicionar novo contato</h2> </router-link> <!--Colocar isso aqui num Navbar ou Header-->
+</div>
+  <div class="main-container">
+    <div id="contactName-table">
+      <h1>Lista de Contatos:</h1>
     </div>
-  </template>
-  
-  <script lang="ts">
-  import Banner from '@/components/Banner.vue';
-  import ContactForm from '@/components/ContactForm.vue';
+<div id="contactName-header">
+  <div id="contactName-table-rows">
+      <div class="contactName-table-row" v-for="contact in contacts" :key="contact.id">
+        <div> 
+          {{ contact.name }} 
+        </div> 
+        <div>
+            <router-link to="/details"> 
+               <button class="btn-details" @click="detailsContact(contact.id)"> Exibir Detalhes </button>  
+            </router-link>
+        </div> 
+      </div>
+  </div> 
+</div>
+</div>
+ 
+</template>
 
-
-  export default {
-    name: 'HomePage',
-    components: {
-      Banner,
-      ContactForm
+<script>
+export default {
+  name: 'DetailsPage',
+  data(){
+        return {
+            contacts: String
+        } 
     },
-    data(){
-      return{
+    methods:{
+        async getContacts() {
+        const req = await fetch("http://localhost:3000/contacts");
+        const data = await req.json();
+        this.contacts = data;
+        
+        console.log(this.contacts);
+        },
+        async detailsContact(id) {
+            console.log(id);
+            const req = await fetch (`http://localhost:3000/contacts/${id}`, {
+                method: "GET"
+            });
+            const res = await req.json(); 
 
-      }
+            this.getContacts(); // Retorna à página inicial
+        },
+
     },
-  }
-  </script>
-  
-  <style scoped>
- .btn-details{
+    mounted(){
+        this.getContacts();
+    }
+}
+</script>
+
+<style scoped>
+#contactName-table {
+    max-width: 500px;
+    margin: 0 auto;
+}
+#contactName-table-header, 
+#contactName-table-rows,
+.contactName-table-row{
+    display:list-item;
+    flex-wrap: wrap;
+}
+#contactName-table-header{
+    font-weight: bold;
+    padding: 12px;
+    border-bottom: 3px solid black;
+}
+.contactName-table-row{
+    width: 100%;
+    padding: 12px;
+    border: 1px solid antiquewhite;
+}
+.btn-details{
     background-color: rgba(171, 230, 235, 0.246);
     color: rgb(188, 36, 173);
-    font-weight: bold;
     border: 2px solid black;
     padding: 10px;
     font-size: 16px;
     margin: 0 auto;
     cursor: pointer;
     transition: 0.5s;
-
 }
 .btn-details:hover{
     background-color: transparent;
     color: rgba(61, 18, 231, 0.864);
 }
-  </style>
-  
+#btn-add-link {
+    max-width: 500px;
+    margin: 0 auto;
+    font-weight: bold;
+    padding: 12px;
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 30px;
+    color: black;
+}
+</style>

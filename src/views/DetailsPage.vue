@@ -13,11 +13,6 @@ import Dashboard from '@/components/Dashboard.vue';
     components:{
       Dashboard
     },
-    props: {
-      // Desenvolver lógica de props
-      // Definir aqui, os dados que serão repassados, definindo aqui a chave
-      //  
-    },
     methods:{
       // Desenvolver lógica de emits
 

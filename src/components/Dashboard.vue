@@ -1,28 +1,68 @@
 <template>
-<h1> Detalhes do contato </h1>
-    <div id="contactName header">
-    <div>Nome:</div>
-    <div>Telefone:</div> 
-    <div>Endereço:</div>
-    <div>E-mail:</div>
-    <div id="contactName-table-rows">
-        <div class="contactName-table-row">
-        <details>
-            <summary>
-                <img src="../assets/down-arrow.png">
-            </summary>
-            <button class="btn-edit"> Editar Contato </button>
-            <button class="btn-delete"> Excluir Contato </button>
-        </details>
+    <div id="contactName-table">
+
+    <div id="contactName-header">
+      <div id="contactName-table-rows">
+        <div class="contactName-table-row" v-for="contact in contacts" :key="contact.id">
+            <div> Nome: {{ contact.name }} </div> 
+            <div> Número de Telefone: {{ contact.cellNumber }} </div>
+            <div> Endereço: {{ contact.address }} </div> 
+            <div> E-mail: {{ contact.email }} </div> 
+            <div>
+                <button class="btn-edit" @change="updateContact($event, contact.id)"> Editar Contato </button>
+                <button class="btn-delete" @click="deleteContact(contact.id)"> Excluir Contato </button> 
+            </div>
+            
         </div>
-    </div> 
+      </div> 
     </div>
+</div>
 </template>
 
 <script>
-    export default{
-        name: 'Dashboard',
+export default{
+    name: 'Dashboard',
+    data(){
+        return {
+            contacts: String,
+            contacts_id: String
+        } 
+    },
+    methods:{
+        async getContacts() { //Puxar os dados do BdD
+        const req = await fetch("http://localhost:3000/contacts");
+        const data = await req.json();
+        this.contacts = data;
+        
+        console.log(this.contacts);
+        },
+        async deleteContact(id) { //Excluir Contatos
+            console.log(id);
+            const req = await fetch (`http://localhost:3000/contacts/${id}`, {
+                method: "DELETE"
+            });
+            const res = await req.json(); 
+            console.log(res.id);
+            this.getContacts();
+        },
+        async updateContact(event, id){ //Editar Contatos
+            console.log(id);
+            const req = await fetch (`http://localhost:3000/contacts/${id}`, {
+                method: "PATCH",
+                headers: {"Content-Type": "application/json"},
+                body: dataJson
+            });
+            const res = await req.json(); 
+            
+            console.log(res);
+
+            this.getContacts();
+        }
+    },
+    mounted(){
+        this.getContacts();
     }
+}
 </script>
 
 <style scoped>
@@ -33,7 +73,7 @@
 #contactName-table-header, 
 #contactName-table-rows,
 .contactName-table-row{
-    display: flex;
+    display:list-item;
     flex-wrap: wrap;
 }
 #contactName-table-header{

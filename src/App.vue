@@ -30,8 +30,8 @@ export default{
   box-sizing: border-box;
 }
 #app{
-  background-color: rgba(89, 86, 82, 0.274);
-  color:black;
+  background-color: #E8C5E5;
+  color:#F7F9F2
 }
 .main-container{
   margin: 50px;

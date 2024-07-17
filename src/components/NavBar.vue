@@ -18,7 +18,7 @@
     
     <style scoped>
     #nav {
-        background-color: blanchedalmond;
+        background-color: #F7F9F2;
         border-bottom: 4px solid #111;
         padding: 15px 50px;
         display: flex;
