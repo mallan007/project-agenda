@@ -1,5 +1,4 @@
 <template>
-<!--Personalizar o Navbar de acordo com a página-->
 <div id="btn-add-link"> 
   <router-link to="/add"> <h2>Adicionar novo contato</h2> </router-link> <!--Colocar isso aqui num Navbar ou Header-->
 </div>
@@ -14,7 +13,7 @@
           {{ contact.name }} 
         </div> 
         <div>
-            <router-link to="/details"> 
+            <router-link to="/details/$id"> 
                <button class="btn-details" @click="detailsContact(contact.id)"> Exibir Detalhes </button>  
             </router-link>
         </div> 
@@ -28,6 +27,7 @@
 <script>
 export default {
   name: 'DetailsPage',
+  props: ["id"], // Pegar o valor de props e repassar com contacts.id
   data(){
         return {
             contacts: String

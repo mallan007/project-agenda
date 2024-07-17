@@ -1,10 +1,12 @@
 <template>
+    <!--Personalizar o Navbar de acordo com a página-->
     <div id="nav">
         <router-link to="/" id="logo-url">
             <img :src="logo" :alt="alt" id="logo">
         </router-link>
      <router-link to="/">Lista de Contatos</router-link> <!-- Criar a Lista de Contatos aqui, já como página inicial, com botão de Exibir Detalhes (v-show com todos os atributos do formulário)-->
-     <router-link to="/details">Detalhes do Contato</router-link> <!-- Aqui será a parte de Detalhes, com botões de Editar e Cancelar (Voltar -> Home)-->
+     <router-link to="/details">Detalhes do Contato</router-link> <!-- Aqui será a parte de Detalhes-->
+     <router-link to="/details/$id">Detalhes do Contato</router-link> <!-- Aqui será a parte de Detalhes de acordo com o $id, com botões de Editar e Cancelar (Voltar -> Home)-->
      <router-link to="/add">Adicionar Contato</router-link> <!-- Aqui será a parte de Adicionar Contatos, com botões de Salvar e Cancelar (Voltar->Home e não guardar infos)-->
     </div>
    </template>
