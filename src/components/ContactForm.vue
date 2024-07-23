@@ -92,7 +92,8 @@ export default{
             // colocar uma msg de sistema
             this.msg = `${res.name} foi adicionado a sua lista de contatos.`;
             setTimeout(() => this.msg = "", 3000);
-            this.$router.push('/');
+            //router.replace('/home');
+            //this.$router.push('/');
         }
     },
     mounted() {

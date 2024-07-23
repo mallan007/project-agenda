@@ -9,7 +9,7 @@
             <div>Endereço:  {{ contact.address }} </div> 
             <div>E-mail: {{ contact.email }} </div> 
             <div>
-                <button class="btn-edit" @click="updateContact()">Editar Contato</button>
+                <button class="btn-edit" @click="updateContact(contact.id)">Editar Contato</button>
                 <button class="btn-delete" @click="deleteContact(contact.id)"> Excluir Contato </button> 
             </div>
         </div>
@@ -45,8 +45,16 @@ export default{
 
             this.getContacts();
         },
-        async updateContact(){                          //Editar Contatos
-            this.$route.push({name:"Contato", params: {data: name, cellNumber, address, email}});
+        async updateContact(id){ 
+            console.log(id);
+            const req = await fetch (`http://localhost:3000/contacts/${id}`, {
+                method: "PATCH"
+            });
+            const res = await req.json(); 
+
+            this.getContacts();
+                                 //Editar Contatos
+            //this.$route.push({name:"Contato", params: {data: name, cellNumber, address, email}});
 
             // msg de att
             this.msg = `O contato ${res.name} foi atualizado.`;
