@@ -5,7 +5,7 @@
         </router-link>
      <router-link to="/">Página Inicial</router-link> <!-- Criar a Lista de Contatos aqui, já como página inicial, com botão de Exibir Detalhes (v-show com todos os atributos do formulário)-->
      <!--router-link to="/details">Detalhes de todos os Contatos</router-link--><!-- Aqui será a parte de Detalhes, com botões de Editar e Cancelar (Voltar -> Home)-->
-     <router-link to="/details">Detalhes do Contato</router-link>
+     <router-link to="/details:id">Detalhes do Contato</router-link>
      <router-link to="/add">Adicionar Contato</router-link> <!-- Aqui será a parte de Adicionar Contatos, com botões de Salvar e Cancelar (Voltar->Home e não guardar infos)-->
      <!--router-link to="/edit/:id">Editar Contato</router-link-->
     </div>
@@ -20,7 +20,7 @@
     
     <style scoped>
     #nav {
-        background-color: rgba(138, 133, 133, 0.575);
+        background-color: rgba(89, 86, 82, 0.274);
         border-bottom: 4px solid #111;
         padding: 15px 50px;
         display: flex;

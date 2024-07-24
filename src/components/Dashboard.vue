@@ -2,14 +2,16 @@
     <div id="contactName-table">
     <div id="contactName-header">
       <div id="contactName-table-rows">
-        <div class="contactName-table-row" v-for="contact in contacts" :key="contact.id ">
+        <div class="contactName-table-row" v-for="contact in contacts" :key="contacts.id ">
             <id>ID: {{ contact.id }} </id>
             <div>Nome: {{ contact.name }} </div> 
             <div>Número de Telefone: {{ contact.cellNumber }} </div>
             <div>Endereço:  {{ contact.address }} </div> 
             <div>E-mail: {{ contact.email }} </div> 
             <div>
-                <button class="btn-edit" @click="updateContact(contact.id)">Editar Contato</button>
+                <router-link to="/edit">
+                    <button class="btn-edit" @click="updateContact(contact.id)">Editar Contato</button>
+                </router-link>
                 <button class="btn-delete" @click="deleteContact(contact.id)"> Excluir Contato </button> 
             </div>
         </div>
@@ -21,6 +23,7 @@
 <script>
 export default{
     name: 'Dashboard',
+    props: [],
     data(){
         return {
             contacts: String,
@@ -53,8 +56,10 @@ export default{
             const res = await req.json(); 
 
             this.getContacts();
+
+            this.$router.push(`/details:${res.id}`);
                                  //Editar Contatos
-            //this.$route.push({name:"Contato", params: {data: name, cellNumber, address, email}});
+            //this.$route.push({name:"Contato", params: { res: name, cellNumber, address, email}});
 
             // msg de att
             this.msg = `O contato ${res.name} foi atualizado.`;

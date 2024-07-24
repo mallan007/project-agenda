@@ -3,7 +3,7 @@
         <Message :msg="msg" v-show="msg" />
     </div>
     <div>
-        <form id="contact-form" @submit="adicionarContato">
+        <form id="contact-form" @submit="addContact">
             <div class="input-container">
                 <label for="name"> Nome do Contato: </label>
                 <input type="text" id="name" name="name" v-model="name" placeholder="Digite o Nome">                               
@@ -21,7 +21,7 @@
                 <input type="text" id="email" name="email" v-model="email" placeholder="Digite o E-mail">
             </div>
             <div>
-                <button class="btn-add" @click="addContact()"> Adicionar Contato </button> 
+                <button class="btn-add"> Adicionar Contato </button> 
             </div>
             
         </form>
@@ -36,14 +36,14 @@ export default{
     name: 'ContactForm',
     data(){
         return {
-            name: null,
-            cellNumber: null,
-            address: null,
-            email: null,
-            msg: null
+            name: "",
+            cellNumber: "",
+            address: "",
+            email: "",
+            msg: ""
         }
-    },
-    /*props: [
+    },/*
+    props: [
        id == {type: String|Number, required: true}
     ],
      created() {
@@ -65,7 +65,7 @@ export default{
         async getContacts() {
             const req = await fetch("http://localhost:3000/contacts");
             const data = await req.json();
-            this.id = data.id;
+
             this.name = data.name;
             this.cellNumber = data.cellNumber;
             this.address = data.address;
@@ -73,14 +73,15 @@ export default{
 
             console.log(data);
         },
-        async addContact(e){
+        async addContact(e) {
+
             e.preventDefault();
+
             const data = {
                 name: this.name,
                 cellNumber: this.cellNumber,
                 address: this.address,
-                email: this.email,
-                id: this.id
+                email: this.email
             }
             const dataJson = JSON.stringify(data);
             const req = await fetch("http://localhost:3000/contacts", {
@@ -93,7 +94,7 @@ export default{
             this.msg = `${res.name} foi adicionado a sua lista de contatos.`;
             setTimeout(() => this.msg = "", 3000);
             //router.replace('/home');
-            //this.$router.push('/');
+            this.$router.push('/');
         }
     },
     mounted() {

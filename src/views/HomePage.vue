@@ -14,7 +14,7 @@
           </div> 
           <div>
               <router-link  :key="contact.id"
-                             to="/details"> 
+                             to="/details:id"> 
                  <button class="btn-details" @click="detailsContact(contact.id)"> Exibir Detalhes </button>  
               </router-link>
           </div> 

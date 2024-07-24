@@ -1,13 +1,6 @@
 {
   "contacts": [
     {
-      "name": "Shelia Mayer",
-      "cellNumber": "294-447-8433",
-      "address": "77004 Kadin Fields",
-      "email": "Crystal_Moore92@yahoo.com",
-      "id": "1"
-    },
-    {
       "name": "Todd Bruen",
       "cellNumber": "786-351-6967",
       "address": "9252 Augustine Square",
@@ -188,6 +181,20 @@
       "cellNumber": "85 9 9210 - 0129",
       "address": "Rua Homem de Ferro, 2013",
       "email": "tetris-khan@gmail.com"
+    },
+    {
+      "id": "f5e4",
+      "name": "Ornnirico",
+      "cellNumber": "8584110522",
+      "address": "Rua dos Ourives, 69",
+      "email": "ornn.rico@gmail.com"
+    },
+    {
+      "id": "ecf3",
+      "name": "ALLAN BRAGA QUEIROZ",
+      "cellNumber": "85984110522",
+      "address": "Rua Matos Vasconcelos",
+      "email": "allanqueiroz.eng@gmail.com"
     }
   ],
   "newContacts": [
