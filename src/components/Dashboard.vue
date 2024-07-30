@@ -2,17 +2,18 @@
     <div id="contactName-table">
     <div id="contactName-header">
       <div id="contactName-table-rows">
-        <div class="contactName-table-row" v-for="contact in contacts" :key="contacts.id ">
-            <id>ID: {{ contact.id }} </id>
-            <div>Nome: {{ contact.name }} </div> 
-            <div>Número de Telefone: {{ contact.cellNumber }} </div>
-            <div>Endereço:  {{ contact.address }} </div> 
-            <div>E-mail: {{ contact.email }} </div> 
+        <div class="contactName-table-row" :key="contacts.id">
+            <div >ID: {{ contacts.id }} </div>
+            <div >Nome: {{ name }} </div> 
+            <div >Número de Telefone: {{ contacts.cellNumber }} </div>
+            <div >Endereço: {{ contacts.address }} </div> 
+            <div >E-mail: {{ contacts.email }} </div> 
             <div>
-                <router-link to="/edit">
-                    <button class="btn-edit" @click="updateContact(contact.id)">Editar Contato</button>
+                <router-link 
+                    to="/edit/:id">
+                    <button class="btn-edit"> Editar Contato </button>
                 </router-link>
-                <button class="btn-delete" @click="deleteContact(contact.id)"> Excluir Contato </button> 
+                <button class="btn-delete" @click="deleteContact(contacts.id)"> Excluir Contato </button> 
             </div>
         </div>
       </div> 
@@ -23,20 +24,17 @@
 <script>
 export default{
     name: 'Dashboard',
-    props: [],
     data(){
         return {
             contacts: String,
-            contacts_id: Number | String,
-            contactsData:[]
         } 
     },
     methods:{
         async getContacts() {
-        const req = await fetch("http://localhost:3000/contacts");
+        const req = await fetch(`http://localhost:3000/contacts/${id}`);
         const data = await req.json();
         this.contacts = data;
-        
+
         console.log(this.contacts);
         },
         async deleteContact(id) {
@@ -46,31 +44,39 @@ export default{
             });
             const res = await req.json(); 
 
+            alert(`${res.name} foi excluído com sucesso.`);
+            
             this.getContacts();
         },
-        async updateContact(id){ 
-            console.log(id);
-            const req = await fetch (`http://localhost:3000/contacts/${id}`, {
-                method: "PATCH"
-            });
-            const res = await req.json(); 
-
-            this.getContacts();
-
-            this.$router.push(`/details:${res.id}`);
-                                 //Editar Contatos
-            //this.$route.push({name:"Contato", params: { res: name, cellNumber, address, email}});
-
-            // msg de att
-            this.msg = `O contato ${res.name} foi atualizado.`;
-            setTimeout(() => this.msg = "", 3000);
-
-            this.getContacts();
-        }
     },
-    mounted(){
+    /*computed (){
+        async detailsContact(id) {
+              console.log(id);
+              const data = {
+                name: this.name,
+                cellNumber: this.cellNumber,
+                address: this.address,
+                email: this.email
+            }
+            const dataJson = JSON.stringify(data);
+              const req = await fetch (`http://localhost:3000/contacts/${id}`, {
+                    method: "PATCH",
+                    headers: {"Content-Type": "application/json"},
+                    body: dataJson
+              });
+                
+              const res = await req.json(); 
+                console.log("ID: "+this.id)
+                console.log("Nome: "+this.name);
+                console.log("Telefone: "+this.cellNumber);
+                console.log("Endereço: "+this.address);
+                console.log("E-mail: "+this.email);
+  
+              //this.getContacts(); // Retorna à página inicial
+          },},*/
+        mounted(){
         this.getContacts();
-    }
+    }, 
 }
 </script>
 

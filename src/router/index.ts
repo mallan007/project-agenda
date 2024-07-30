@@ -13,17 +13,17 @@ const routes = [
   {
     path: '/add',
     name: 'add',
-    component: AddPage
+    component: () => import('./../views/AddPage.vue')
   },
   {
-    path: '/details:id',
+    path: '/details/:id',
     name: 'details',
-    component: DetailsPage
+    component: () => import('./../views/DetailsPage.vue')
   },
   {
     path: '/edit/:id',
     name: 'edit',
-    component: EditPage
+    component: () => import('./../views/EditPage.vue')
   }
 ]
 

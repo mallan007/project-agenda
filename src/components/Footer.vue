@@ -1,13 +1,17 @@
 <template>
     <footer id="footer">
-       <p> Lista de Contatos </p> 
+       <GoBack/>
     </footer>
-    <!--Criar lógica para 1 footer universal e 1 footer para 'Adicionar Contato'-->
+
    </template>
 
    <script>
+    import GoBack from './GoBack.vue';  
     export default{
-        name: "Footer"
+        name: "Footer",
+        components:{
+            GoBack
+        },
     }
 
     </script>

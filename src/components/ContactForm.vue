@@ -21,9 +21,8 @@
                 <input type="text" id="email" name="email" v-model="email" placeholder="Digite o E-mail">
             </div>
             <div>
-                <button class="btn-add"> Adicionar Contato </button> 
+                <button class="btn-add"> Adicionar Contato </button>
             </div>
-            
         </form>
     </div>
 </template>
@@ -59,10 +58,10 @@ export default{
         )}
     },*/
     components:{
-        Message
+        Message,
     },
     methods: {
-        async getContacts() {
+        async getContacts() { //Aqui pega os dados
             const req = await fetch("http://localhost:3000/contacts");
             const data = await req.json();
 
@@ -70,11 +69,9 @@ export default{
             this.cellNumber = data.cellNumber;
             this.address = data.address;
             this.email = data.email;
-
-            console.log(data);
         },
         async addContact(e) {
-
+            
             e.preventDefault();
 
             const data = {
@@ -91,8 +88,7 @@ export default{
             });
             const res = await req.json();
             // colocar uma msg de sistema
-            this.msg = `${res.name} foi adicionado a sua lista de contatos.`;
-            setTimeout(() => this.msg = "", 3000);
+            alert(`${res.name} foi adicionado a sua lista de contatos.`);
             //router.replace('/home');
             this.$router.push('/');
         }

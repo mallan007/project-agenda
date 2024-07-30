@@ -13,16 +13,17 @@
             {{ contact.name }} 
           </div> 
           <div>
-              <router-link  :key="contact.id"
-                             to="/details:id"> 
-                 <button class="btn-details" @click="detailsContact(contact.id)"> Exibir Detalhes </button>  
-              </router-link>
+              <!--router-link :key="contact.id"
+                            to="/details/:id"--> 
+                 <button class="btn-details" @click="detailsContact(contact.id)"> Exibir Detalhes </button> 
+                 <!--button class="btn-details" @click="detailsContact(contact.id)"> Exibir Detalhes </button>
+              </router-link-->
           </div> 
         </div>
     </div> 
   </div>
   </div>
-   
+   <!-- Criar lógica de v-if para mostrar a aba de detalhes de cada contato a partir de um botão -->
   </template>
   
   <script>
@@ -31,26 +32,31 @@
 
     data(){
           return {
-              contacts: String
+              contacts: Array | Object
           } 
       },
       methods:{
           async getContacts() {
-          const req = await fetch("http://localhost:3000/contacts");
-          const data = await req.json();
-          this.contacts = data;
-          
-          console.log(this.contacts);
+            const req = await fetch("http://localhost:3000/contacts");
+            const data = await req.json();
+            this.contacts = data;
+            console.log(this.contacts); 
+
           },
+
           async detailsContact(id) {
               console.log(id);
-              const req = await fetch (`http://localhost:3000/contacts/${id}`, {
-                  method: "PATCH"
-              });
-              const res = await req.json(); 
-  
-              this.getContacts(); // Retorna à página inicial
+              const data = {
+                id: this.id,
+                name: this.name,
+                cellNumber: this.cellNumber,
+                address: this.address,
+                email: this.email
+            }
+            this.contacts = data;                                           
+            //console.log("Nome: "+`${this.contacts[this.id].name}`);
           },
+        
       },
       mounted(){
           this.getContacts();

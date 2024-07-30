@@ -1,72 +1,68 @@
 <template>
-  <div id="contactName-table">
-  <div id="contactName-header">
-    <div id="contactName-table-rows">
-      <div class="contactName-table-row" :key="contact.id ">
-          <id>ID: {{ contact.id }} </id>
-          <div>Nome: {{ contact.name }} </div> 
-          <div>Número de Telefone: {{ contact.cellNumber }} </div>
-          <div>Endereço:  {{ contact.address }} </div> 
-          <div>E-mail: {{ contact.email }} </div> 
-          <div>
-              <button class="btn-edit" @click="updateContact(contact.id)">Editar Contato</button>
-              <button class="btn-delete" @click="deleteContact(contact.id)"> Excluir Contato </button> 
-          </div>
-      </div>
-    </div> 
-  </div>
-</div>
+   <div>
+        <form id="edit-form" @submit="editContact" :key="contacts.id">
+            <div class="input-container">
+                <label for="name"> {{ contacts.name }} </label>
+                <input type="text" id="name" name="name" v-model="name" placeholder="Digite o Nome">                               
+            </div>
+            <div class="input-container">
+                <label for="cellNumber"> {{ contacts.cellNumber }} </label>
+                <input type="text" id="cellNumber" name="cellNumber" v-model="cellNumber" placeholder="Digite o Telefone">
+            </div>
+            <div class="input-container">
+                <label for="address"> {{ contacts.address }} </label>
+                <input type="text" id="address" name="address" v-model="address" placeholder="Digite o Endereço">
+            </div>
+            <div class="input-container">
+                <label for="email"> {{ contacts.email }} </label>
+                <input type="text" id="email" name="email" v-model="email" placeholder="Digite o E-mail">
+            </div>
+            <div>
+                <button class="btn-edit"> Atualizar Contato </button>
+            </div>
+        </form>
+    </div>
 </template>
 
 <script>
+
 export default{
   name: 'Dashboard',
-  props: [],
-  data(){
-      return {
-          contacts: String,
-          contacts_id: Number | String,
-          contactsData:[]
-      } 
+  props: {
+    contacts: Object
   },
+  /*data(){
+      return {
+          contacts: String
+      } 
+  },*/
   methods:{
-      async getContacts() {
-      const req = await fetch("http://localhost:3000/contacts");
-      const data = await req.json();
-      this.contacts = data;
-      
-      console.log(this.contacts);
-      },
-      async deleteContact(id) {
-          console.log(id);
-          const req = await fetch (`http://localhost:3000/contacts/${id}`, {
-              method: "DELETE"
-          });
-          const res = await req.json(); 
+    async editContact(e) {
+    
+      e.preventDefault();
 
-          this.getContacts();
-      },
-      async updateContact(id){ 
-          console.log(id);
-          const req = await fetch (`http://localhost:3000/contacts/${id}`, {
-              method: "PATCH"
-          });
-          const res = await req.json(); 
-
-          this.getContacts();
-
-          this.$router.push(`/details:${res.id}`);
-
-          // msg de att
-          this.msg = `O contato ${res.name} foi atualizado.`;
-          setTimeout(() => this.msg = "", 3000);
-
-          this.getContacts();
+      const data = {
+          name: this.name,
+          cellNumber: this.cellNumber,
+          address: this.address,
+          email: this.email
       }
+      const dataJson = JSON.stringify(data);
+      const req = await fetch(`http://localhost:3000/contacts/${id}`, {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: dataJson
+      });
+      const res = await req.json();
+      // colocar uma msg de sistema
+      alert(`${res.name} foi atualizado.`);
+      //router.replace('/home');
+      this.$router.push('/');
+     },
   },
   mounted(){
       this.getContacts();
-  }
+  },
 }
 </script>
 

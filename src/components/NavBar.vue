@@ -3,11 +3,12 @@
         <router-link to="/" id="logo-url">
             <img :src="logo" :alt="alt" id="logo">
         </router-link>
-     <router-link to="/">Página Inicial</router-link> <!-- Criar a Lista de Contatos aqui, já como página inicial, com botão de Exibir Detalhes (v-show com todos os atributos do formulário)-->
-     <!--router-link to="/details">Detalhes de todos os Contatos</router-link--><!-- Aqui será a parte de Detalhes, com botões de Editar e Cancelar (Voltar -> Home)-->
-     <router-link to="/details:id">Detalhes do Contato</router-link>
-     <router-link to="/add">Adicionar Contato</router-link> <!-- Aqui será a parte de Adicionar Contatos, com botões de Salvar e Cancelar (Voltar->Home e não guardar infos)-->
-     <!--router-link to="/edit/:id">Editar Contato</router-link-->
+     <router-link to="/">Página Inicial</router-link> 
+     <!-- Exibir Detalhes (v-show com todos os atributos do formulário)
+     <router-link to="/details/:id">Detalhes do Contato</router-link-->
+     <router-link to="/add">Adicionar Contato</router-link> 
+     <!-- Editar Contatos, com botões de Salvar e Excluir (receber ID-->
+     <router-link to="/edit/:id">Editar Contato</router-link>
     </div>
    </template>
 
