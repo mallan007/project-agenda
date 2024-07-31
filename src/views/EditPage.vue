@@ -37,32 +37,32 @@ export default{
       } 
   },*/
   methods:{
-    async editContact(e) {
-    
-      e.preventDefault();
+    async detailsContact(id) {
+          const data = {
+              id: this.id,
+              name: this.name,
+              cellNumber: this.cellNumber,
+              address: this.address,
+              email: this.email
+          }
 
-      const data = {
-          name: this.name,
-          cellNumber: this.cellNumber,
-          address: this.address,
-          email: this.email
-      }
-      const dataJson = JSON.stringify(data);
-      const req = await fetch(`http://localhost:3000/contacts/${id}`, {
-          method: "POST",
-          headers: {"Content-Type": "application/json"},
-          body: dataJson
-      });
-      const res = await req.json();
-      // colocar uma msg de sistema
-      alert(`${res.name} foi atualizado.`);
-      //router.replace('/home');
-      this.$router.push('/');
-     },
-  },
+          const req = await fetch (`http://localhost:3000/contacts/${id}`, {
+              method: "PATCH",
+              headers: {
+                  "Content-Type": "application/json"
+              },
+              body: JSON.stringify(data)
+          });
+          const res = await req.json();
+
+            //this.contacts = data;            
+            this.isClicked = true;                               
+            //console.log("Nome: "+`${this.contacts[this.id].name}`);
+          },
   mounted(){
       this.getContacts();
   },
+}
 }
 </script>
 

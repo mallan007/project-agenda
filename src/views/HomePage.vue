@@ -9,21 +9,32 @@
   <div id="contactName-header">
     <div id="contactName-table-rows">
         <div class="contactName-table-row" v-for="contact in contacts" :key="contact.id">
-          <div> 
+          <div class="contactName-table-cell"> 
             {{ contact.name }} 
-          </div> 
-          <div>
+            <button class="btn-details" @click="detailsContact(contact.id)"> Exibir Detalhes </button>
               <!--router-link :key="contact.id"
-                            to="/details/:id"--> 
-                 <button class="btn-details" @click="detailsContact(contact.id)"> Exibir Detalhes </button> 
-                 <!--button class="btn-details" @click="detailsContact(contact.id)"> Exibir Detalhes </button>
+                            to="/details/:id"> 
+              <button class="btn-details"> Exibir Detalhes </button>                    
               </router-link-->
+            <div id="show-details" v-if="isClicked"> 
+                <div >ID: {{ contact.id }} </div>
+                <div >Nome: {{ contact.name }} </div> 
+                <div >Número de Telefone: {{ contact.cellNumber }} </div>
+                <div >Endereço: {{ contact.address }} </div> 
+                <div >E-mail: {{ contact.email }} </div>
+                <div> 
+                  <button class="btn-edit" @click="editContact(contact.id)"> Editar Contato </button>
+                  <button class="btn-delete" @click="deleteContact(contact.id)"> Excluir Contato </button>
+                </div> 
+            </div>  
+            </div>
+          </div> 
+          
+          <div>
           </div> 
         </div>
     </div> 
   </div>
-  </div>
-   <!-- Criar lógica de v-if para mostrar a aba de detalhes de cada contato a partir de um botão -->
   </template>
   
   <script>
@@ -32,7 +43,8 @@
 
     data(){
           return {
-              contacts: Array | Object
+              contacts: Array | Object,
+              isClicked: false
           } 
       },
       methods:{
@@ -40,23 +52,71 @@
             const req = await fetch("http://localhost:3000/contacts");
             const data = await req.json();
             this.contacts = data;
-            console.log(this.contacts); 
+            
+            this.name = data.name;
+            this.cellNumber = data.cellNumber;
+            this.address = data.address;
+            this.email = data.email;
 
+            console.log(this.contacts);
+            //console.log(this.contacts[1].name); 
+            //console.log("Nome: "+`${this.contacts[id].name}`);
+            //console.log(this.constacts[this.id].name);
           },
 
           async detailsContact(id) {
-              console.log(id);
-              const data = {
-                id: this.id,
-                name: this.name,
-                cellNumber: this.cellNumber,
-                address: this.address,
-                email: this.email
-            }
-            this.contacts = data;                                           
+          const data = {
+              id: this.id,
+              name: this.name,
+              cellNumber: this.cellNumber,
+              address: this.address,
+              email: this.email
+          }
+          /*
+          const req = await fetch (`http://localhost:3000/contacts/${id}`, {
+              method: "PATCH",
+              headers: {
+                  "Content-Type": "application/json"
+              },
+              body: JSON.stringify(data)
+          });
+          const res = await req.json();
+*/
+          this.isClicked = true;                               
             //console.log("Nome: "+`${this.contacts[this.id].name}`);
           },
-        
+          async deleteContact(id) {
+            const req = await fetch (`http://localhost:3000/contacts/${id}`, {
+                method: "DELETE"
+            });
+            const res = await req.json(); 
+
+            alert(`${res.name} foi excluído com sucesso.`);
+            
+            this.getContacts();
+        },
+        async editContact(id) {
+          const data = {
+              id: this.id,
+              name: this.name,
+              cellNumber: this.cellNumber,
+              address: this.address,
+              email: this.email
+          }
+
+          const req = await fetch (`http://localhost:3000/contacts/${id}`, {
+              method: "PUT",
+              headers: {
+                  "Content-Type": "application/json"
+              },
+              body: JSON.stringify(data)
+          });
+          const res = await req.json();
+
+            //this.contacts = data;            
+            this.isClicked = true;                               
+            //console.log("Nome: "+`${this.contacts[this.id].name}`);
+          }
       },
       mounted(){
           this.getContacts();
@@ -109,4 +169,20 @@
       margin-bottom: 30px;
       color: black;
   }
+.btn-delete,
+.btn-edit{
+    background-color: rgba(171, 230, 235, 0.246);
+    color: rgb(188, 36, 173);
+    border: 2px solid black;
+    padding: 10px;
+    font-size: 16px;
+    margin: 0 auto;
+    cursor: pointer;
+    transition: 0.5s;
+}
+.btn-delete:hover,
+.btn-edit:hover{
+    background-color: transparent;
+    color: rgba(61, 18, 231, 0.864);
+}
   </style>
