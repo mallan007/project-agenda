@@ -17,13 +17,13 @@
               <button class="btn-details"> Exibir Detalhes </button>                    
               </router-link-->
             <div id="show-details" v-if="isClicked"> 
-                <div >ID: {{ contact.id }} </div>
-                <div >Nome: {{ contact.name }} </div> 
-                <div >Número de Telefone: {{ contact.cellNumber }} </div>
-                <div >Endereço: {{ contact.address }} </div> 
-                <div >E-mail: {{ contact.email }} </div>
+                <div class="editor" :value="contactId">ID: {{ contact.id }} </div>
+                <div class="editor" :value="contactName">Nome: {{ contact.name }} </div> 
+                <div class="editor" :value="contactCellNumber">Número de Telefone: {{ contact.cellNumber }} </div>
+                <div class="editor" :value="contactAddress">Endereço: {{ contact.address }} </div> 
+                <div class="editor" :value="contactEmail">E-mail: {{ contact.email }} </div>
                 <div> 
-                  <button class="btn-edit" @click="editContact(contact.id)"> Editar Contato </button>
+                  <button class="btn-edit" @change="editContact($event, contact.id)"> Editar Contato </button>
                   <button class="btn-delete" @click="deleteContact(contact.id)"> Excluir Contato </button>
                 </div> 
             </div>  
@@ -95,24 +95,33 @@
             
             this.getContacts();
         },
-        async editContact(id) {
+        async editContact(event, id) {
+
+          const editor = event.target.value;
+
+          const dataJson = JSON.stringify(
+            {contactName: data.name}, 
+            {contactCellNumber: cellNumber},
+            {contactAddress: address},
+            {contactEmail: email}
+            );
+
+          const req = await fetch (`http://localhost:3000/contacts/${id}`, {
+              method: "PATCH",
+              headers: {
+                  "Content-Type": "application/json",
+                  body: dataJson
+              },
+              
+          });
+          const res = await req.json();
+
           const data = {
-              id: this.id,
               name: this.name,
               cellNumber: this.cellNumber,
               address: this.address,
               email: this.email
           }
-
-          const req = await fetch (`http://localhost:3000/contacts/${id}`, {
-              method: "PUT",
-              headers: {
-                  "Content-Type": "application/json"
-              },
-              body: JSON.stringify(data)
-          });
-          const res = await req.json();
-
             //this.contacts = data;            
             this.isClicked = true;                               
             //console.log("Nome: "+`${this.contacts[this.id].name}`);

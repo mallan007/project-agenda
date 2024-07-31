@@ -1,16 +1,6 @@
 {
   "contacts": [
     {
-      "id": "1"
-    },
-    {
-      "name": "Todd Bruen",
-      "cellNumber": "786-351-6967",
-      "address": "9252 Augustine Square",
-      "email": "Blake_Jaskolski@gmail.com",
-      "id": "3"
-    },
-    {
       "name": "Gwendolyn Roberts",
       "cellNumber": "502-976-5931",
       "address": "152 Olson Bypass",
@@ -205,6 +195,13 @@
       "cellNumber": "86 9 8999 - 9888",
       "address": "Rua Dois Cavalos, 123",
       "email": "strog@yahoo.com.br"
+    },
+    {
+      "id": "5e14",
+      "name": "Serelepiana",
+      "cellNumber": "83 9 9855 - 8999",
+      "address": "Rua Serpe Serpentina, 213",
+      "email": "serelepiana@outlook.com"
     }
   ],
   "newContacts": [
