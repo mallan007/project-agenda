@@ -15,7 +15,10 @@
     <script>
         export default {
             name: 'NavBar',
-            props: ["logo", "alt"]
+            props: {
+                logo: String,
+                alt: String
+            }
         }
     </script>
     

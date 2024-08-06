@@ -12,18 +12,22 @@
           <div class="contactName-table-cell"> 
             {{ contact.name }} 
             <button class="btn-details" @click="detailsContact(contact.id)"> Exibir Detalhes </button>
-              <!--router-link :key="contact.id"
-                            to="/details/:id"> 
-              <button class="btn-details"> Exibir Detalhes </button>                    
-              </router-link-->
-            <div id="show-details" v-if="isClicked"> 
+              <router-link :key="contact.id"
+                            to="/details/+id"> 
+              <button class="btn-details"> Ir para Exibir Detalhes </button>                    
+              </router-link>
+            <div id="show-details" v-if="isClicked" :key="contact.id"> 
                 <div class="editor" :value="contactId">ID: {{ contact.id }} </div>
                 <div class="editor" :value="contactName">Nome: {{ contact.name }} </div> 
                 <div class="editor" :value="contactCellNumber">Número de Telefone: {{ contact.cellNumber }} </div>
                 <div class="editor" :value="contactAddress">Endereço: {{ contact.address }} </div> 
                 <div class="editor" :value="contactEmail">E-mail: {{ contact.email }} </div>
                 <div> 
-                  <button class="btn-edit" @change="editContact($event, contact.id)"> Editar Contato </button>
+                  <router-link 
+                        to="/edit/+id">
+                    <button class="btn-edit"> Editar Contato </button>
+                    <!--button class="btn-edit" @change="editContact($event, contact.id)"> Editar Contato </button-->
+                  </router-link>
                   <button class="btn-delete" @click="deleteContact(contact.id)"> Excluir Contato </button>
                 </div> 
             </div>  

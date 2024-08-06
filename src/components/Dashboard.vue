@@ -10,7 +10,7 @@
             <div >E-mail: {{ contacts.email }} </div> 
             <div>
                 <router-link 
-                    to="/edit/:id">
+                    to="/edit/+id">
                     <button class="btn-edit"> Editar Contato </button>
                 </router-link>
                 <button class="btn-delete" @click="deleteContact(contacts.id)"> Excluir Contato </button> 
@@ -24,6 +24,9 @@
 <script>
 export default{
     name: 'Dashboard',
+    mounted(){
+        this.getContacts();
+    },
     data(){
         return {
             contacts: String,
@@ -74,9 +77,7 @@ export default{
   
               //this.getContacts(); // Retorna à página inicial
           },},*/
-        mounted(){
-        this.getContacts();
-    }, 
+         
 }
 </script>
 

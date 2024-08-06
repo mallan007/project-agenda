@@ -1,69 +1,96 @@
 <template>
    <div>
-        <form id="edit-form" @submit="editContact" :key="contacts.id">
+        <form id="edit-form" :key="currentContact.id">
             <div class="input-container">
-                <label for="name"> {{ contacts.name }} </label>
-                <input type="text" id="name" name="name" v-model="name" placeholder="Digite o Nome">                               
+                <label for="name">  {{ currentContact.name }} </label>
+                <input type="text" id="currentContact.name" name="currentContact.name">                               
             </div>
             <div class="input-container">
-                <label for="cellNumber"> {{ contacts.cellNumber }} </label>
-                <input type="text" id="cellNumber" name="cellNumber" v-model="cellNumber" placeholder="Digite o Telefone">
+                <label for="cellNumber"> {{ currentContact.cellNumber }} </label>
+                <input type="text" id="cellNumber" name="cellNumber">
             </div>
             <div class="input-container">
-                <label for="address"> {{ contacts.address }} </label>
-                <input type="text" id="address" name="address" v-model="address" placeholder="Digite o Endereço">
+                <label for="address"> {{ currentContact.address }} </label>
+                <input type="text" id="address" name="address">
             </div>
             <div class="input-container">
-                <label for="email"> {{ contacts.email }} </label>
-                <input type="text" id="email" name="email" v-model="email" placeholder="Digite o E-mail">
+                <label for="email"> {{ currentContact.email }} </label>
+                <input type="text" id="email" name="email">
             </div>
             <div>
-                <button class="btn-edit"> Atualizar Contato </button>
+                <button class="btn-edit" @click="editContact(currentContact.id)"> Atualizar Contato </button>
+                <!--button class="btn-delete" @click="deleteContact(currentContact.id)"> Excluir Contato </button--> 
             </div>
         </form>
     </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 
-export default{
-  name: 'Dashboard',
-  props: {
-    contacts: Object
-  },
-  /*data(){
-      return {
-          contacts: String
-      } 
-  },*/
-  methods:{
-    async detailsContact(id) {
-          const data = {
-              id: this.id,
-              name: this.name,
-              cellNumber: this.cellNumber,
-              address: this.address,
-              email: this.email
-          }
-
-          const req = await fetch (`http://localhost:3000/contacts/${id}`, {
-              method: "PATCH",
-              headers: {
-                  "Content-Type": "application/json"
-              },
-              body: JSON.stringify(data)
-          });
-          const res = await req.json();
-
-            //this.contacts = data;            
-            this.isClicked = true;                               
-            //console.log("Nome: "+`${this.contacts[this.id].name}`);
-          },
-  mounted(){
-      this.getContacts();
-  },
+type Contact = {
+  name: string,
+  cellNumber: string,
+  address: string,
+  email: string,
+  id: string
 }
-}
+
+export default defineComponent({
+  name: 'EditPage',
+  data() {
+    return {
+      contacts: [] as Contact[],
+      currentContact: {} as Contact
+    }
+  },
+  mounted() {
+    this.getContacts();
+  },
+  methods: {
+    async getContacts() {
+      const req = await fetch("http://localhost:3000/contacts");
+      const data = await req.json();
+      console.log(data);
+      this.contacts = data as Contact[];
+      this.currentContact = this.contacts[0];
+      console.log(this.currentContact);
+      this.editContact(this.currentContact.id);
+    },
+    async editContact(id: string) {
+      const data = {
+        name: this.currentContact.name,
+        cellNumber: this.currentContact.cellNumber,
+        address: this.currentContact.address,
+        email: this.currentContact.email,
+        id: this.currentContact.id,
+      }
+
+    const req = await fetch (`http://localhost:3000/contacts/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    });
+
+    const res = await req.json();
+    console.log(res);      
+           
+    }
+  },
+      async deleteContact(id: string) {
+        const req = await fetch (`http://localhost:3000/contacts/${id}`, {
+            method: "DELETE"
+        });
+        const res = await req.json(); 
+
+        alert(`${res.name} foi excluído com sucesso.`);
+        
+        this.getContacts();
+    },
+});
+
 </script>
 
 <style scoped>

@@ -1,3 +1,4 @@
+<!--Renomear para Português-->
 <template>
     <span class="btn-go-back">
       <button @click="$router.back()">Cancelar</button>

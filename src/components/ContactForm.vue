@@ -33,7 +33,7 @@ import Message from './Message.vue';
 
 export default{
     name: 'ContactForm',
-    data(){
+    data(){ //Editar via POO
         return {
             name: "",
             cellNumber: "",
