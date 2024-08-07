@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "backend": "json-server --watch db/agenda.json"
+    "backend": "json-server --watch database/agenda.json"
   },
   "dependencies": {
     "core-js": "^3.8.3",

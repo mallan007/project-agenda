@@ -1,16 +1,17 @@
 <template>
     <footer id="footer">
-       <GoBack/>
+       <ButtonVoltar />
     </footer>
 
    </template>
 
    <script>
-    import GoBack from './GoBack.vue';  
+    import ButtonVoltar from './ButtonVoltar.vue';
+
     export default{
         name: "Footer",
         components:{
-            GoBack
+            ButtonVoltar
         },
     }
 
