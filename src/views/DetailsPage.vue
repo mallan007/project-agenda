@@ -7,7 +7,6 @@
   
   <script>
 import Dashboard from '@/components/Dashboard.vue';
-//import contacts from 'agenda.json';
 
 export default {
 name: 'DetailsPage',

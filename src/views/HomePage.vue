@@ -18,29 +18,23 @@
             <button class="btn-details" @click="detailsContact(contact.id)">
               Exibir Detalhes
             </button>
-            <router-link
-              :key="contact.id"
-              :to="'/details/'+id"
-              :value="contact.id"
-            > 
-              <button class="btn-details">Ir para Exibir Detalhes</button>
-            </router-link>
             <div id="show-details" v-if="isClicked" :key="contact.id">
-              <div class="editor" :value="contactId">ID: {{ contact.id }}</div>
-              <div class="editor" :value="contactName">
+              <div class="editor">
+                ID: {{ contact.id }}</div>
+              <div class="editor" >
                 Nome: {{ contact.name }}
               </div>
-              <div class="editor" :value="contactCellNumber">
+              <div class="editor">
                 Número de Telefone: {{ contact.cellNumber }}
               </div>
-              <div class="editor" :value="contactAddress">
+              <div class="editor">
                 Endereço: {{ contact.address }}
               </div>
-              <div class="editor" :value="contactEmail">
+              <div class="editor">
                 E-mail: {{ contact.email }}
               </div>
               <div>
-                <router-link to="/edit/:id">
+                <router-link to="/edit/+contact.id">
                   <button class="btn-edit">Editar Contato</button>
                 </router-link>
                 <button class="btn-delete" @click="deleteContact(contact.id)">
@@ -62,7 +56,7 @@ export default {
   data() {
     return {
       contacts: Array | Object,
-      isClicked: false,
+      isClicked: Boolean = false,
     };
   },
   methods: {
@@ -83,6 +77,9 @@ export default {
     },
 
     async detailsContact(id) {
+      
+      console.log(id);
+      
       const data = {
         id: this.id,
         name: this.name,
@@ -90,17 +87,8 @@ export default {
         address: this.address,
         email: this.email,
       };
-      /*
-          const req = await fetch (`http://localhost:3000/contacts/${id}`, {
-              method: "PATCH",
-              headers: {
-                  "Content-Type": "application/json"
-              },
-              body: JSON.stringify(data)
-          });
-          const res = await req.json();
-*/
-      this.isClicked = true;
+
+     this.isClicked = true;
       //console.log("Nome: "+`${this.contacts[this.id].name}`);
     },
     async deleteContact(id) {

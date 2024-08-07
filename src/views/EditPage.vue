@@ -79,6 +79,7 @@ export default defineComponent({
   },
   mounted() {
     this.getContacts();
+    console.warn(this.$route.params.id);
   },
   methods: {
     async getContacts() {
@@ -86,9 +87,11 @@ export default defineComponent({
       const data = await req.json();
       console.log(data);
       this.contacts = data as Contact[];
-      this.currentContact = this.contacts[12]; // id na rota -> findIndex
+
+      this.currentContact = this.contacts[16]; // id na rota -> findIndex
       console.log(this.currentContact);
       this.editContact(this.currentContact.id);
+  
     },
     async editContact(id: string) {
       const data = {

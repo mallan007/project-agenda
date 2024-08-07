@@ -4,12 +4,12 @@
       <div id="contactName-table-rows">
         <div class="contactName-table-row" :key="contacts.id">
           <div>ID: {{ contacts.id }}</div>
-          <div>Nome: {{ name }}</div>
+          <div>Nome: {{ contacts.name }}</div>
           <div>Número de Telefone: {{ contacts.cellNumber }}</div>
           <div>Endereço: {{ contacts.address }}</div>
           <div>E-mail: {{ contacts.email }}</div>
           <div>
-            <router-link to="/edit/+id">
+            <router-link to="'/edit/'+id">
               <button class="btn-edit">Editar Contato</button>
             </router-link>
             <button class="btn-delete" @click="deleteContact(contacts.id)">
