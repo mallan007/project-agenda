@@ -15,9 +15,11 @@
         >
           <div class="contactName-table-cell">
             {{ contact.name }}
-            <button class="btn-details" @click="detailsContact(contact.id)">
+            <router-link :to="'/details/'+contact.id">
+            <button class="btn-details">
               Exibir Detalhes
-            </button>
+            </button> 
+            </router-link>
             <div id="show-details" v-if="isClicked" :key="contact.id">
               <div class="editor">
                 ID: {{ contact.id }}</div>
@@ -34,7 +36,7 @@
                 E-mail: {{ contact.email }}
               </div>
               <div>
-                <router-link to="/edit/+contact.id">
+                <router-link :to="'/edit/'+contact.id">
                   <button class="btn-edit">Editar Contato</button>
                 </router-link>
                 <button class="btn-delete" @click="deleteContact(contact.id)">
@@ -71,25 +73,21 @@ export default {
       this.email = data.email;
 
       console.log(this.contacts);
-      //console.log(this.contacts[1].name);
-      //console.log("Nome: "+`${this.contacts[id].name}`);
-      //console.log(this.constacts[this.id].name);
     },
 
     async detailsContact(id) {
       
-      console.log(id);
+      console.log("ID de detalhes: "+id);
       
       const data = {
-        id: this.id,
+        id: this.$route.params.id,
         name: this.name,
         cellNumber: this.cellNumber,
         address: this.address,
         email: this.email,
       };
-
+ 
      this.isClicked = true;
-      //console.log("Nome: "+`${this.contacts[this.id].name}`);
     },
     async deleteContact(id) {
       const req = await fetch(`http://localhost:3000/contacts/${id}`, {

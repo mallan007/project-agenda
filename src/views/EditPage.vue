@@ -66,7 +66,7 @@ type Contact = {
   cellNumber: string;
   address: string;
   email: string;
-  id: string;
+  id: number | string;
 };
 
 export default defineComponent({
@@ -79,21 +79,29 @@ export default defineComponent({
   },
   mounted() {
     this.getContacts();
-    console.warn(this.$route.params.id);
+    console.warn("ID de editar: " + this.$route.params.id); // Saída: Concerto de editar: :contact.id
   },
   methods: {
     async getContacts() {
-      const req = await fetch("http://localhost:3000/contacts");
+      const req = await fetch(
+        `http://localhost:3000/contacts/${this.$route.params.id}`
+      );
       const data = await req.json();
       console.log(data);
       this.contacts = data as Contact[];
 
-      this.currentContact = this.contacts[16]; // id na rota -> findIndex
-      console.log(this.currentContact);
+      //this.currentContact = this.contacts[16]; // id na rota -> findIndex
+
+      this.currentContact.id = this.contacts[this.$route.params.id].id;
+
+      /*this.currentContact["id"] = this.contacts.findIndex(
+        (contact) => contact.id === this.$route.params.id
+      ); //Está criando ID -1 e depois incrementando */
+      console.log("ID de editar: " + this.$route.params.id); // Saída: ID de editar: :contact.id
+      console.log("Conteúdo do contato atual: " + this.currentContact); // Saída: Conteúdo do contato atual: [object Object]
       this.editContact(this.currentContact.id);
-  
     },
-    async editContact(id: string) {
+    async editContact(id: string | number) {
       const data = {
         name: this.currentContact.name,
         cellNumber: this.currentContact.cellNumber,

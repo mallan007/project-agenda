@@ -9,9 +9,9 @@
           <div>Endereço: {{ contacts.address }}</div>
           <div>E-mail: {{ contacts.email }}</div>
           <div>
-            <router-link to="'/edit/'+id">
-              <button class="btn-edit">Editar Contato</button>
-            </router-link>
+            <router-link :to="'/edit/'+contacts.id"><button class="btn-edit">Atualizar Contato</button></router-link>
+              <!--button class="btn-edit" @click="editContact(contacts.id)">Editar Contato</button-->
+            
             <button class="btn-delete" @click="deleteContact(contacts.id)">
               Excluir Contato
             </button>
@@ -25,6 +25,11 @@
 <script>
 export default {
   name: "Dashboard",
+  data() {
+    return {
+      contacts: Array | Object,
+    };
+  },
   mounted() {
     this.getContacts();
   },
@@ -35,7 +40,7 @@ export default {
   },
   methods: {
     async getContacts() {
-      const req = await fetch(`http://localhost:3000/contacts/${id}`); //Linha apresentando erro de variável não declarada
+      const req = await fetch(`http://localhost:3000/contacts/${this.$route.params.id}`); //Linha apresentando erro de variável não declarada
       const data = await req.json();
       this.contacts = data;
 
@@ -53,31 +58,18 @@ export default {
       this.getContacts();
     },
   },
-  /*computed (){
-        async detailsContact(id) {
-              console.log(id);
-              const data = {
-                name: this.name,
-                cellNumber: this.cellNumber,
-                address: this.address,
-                email: this.email
-            }
-            const dataJson = JSON.stringify(data);
-              const req = await fetch (`http://localhost:3000/contacts/${id}`, {
-                    method: "PATCH",
-                    headers: {"Content-Type": "application/json"},
-                    body: dataJson
-              });
-                
-              const res = await req.json(); 
-                console.log("ID: "+this.id)
-                console.log("Nome: "+this.name);
-                console.log("Telefone: "+this.cellNumber);
-                console.log("Endereço: "+this.address);
-                console.log("E-mail: "+this.email);
-  
-              //this.getContacts(); // Retorna à página inicial
-          },},*/
+  async editContact(id) {
+      
+      console.log("ID de detalhes: "+id);
+      
+      const data = {
+        id: this.$route.params.id,
+        name: this.name,
+        cellNumber: this.cellNumber,
+        address: this.address,
+        email: this.email,
+      };
+  }
 };
 </script>
 
